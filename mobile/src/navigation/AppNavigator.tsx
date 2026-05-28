@@ -12,6 +12,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { DashboardScreen }      from '../screens/DashboardScreen';
+import { ProfileScreen }        from '../screens/ProfileScreen';
+import { DetailsView }          from '../screens/DetailsView';
 import { ThemeSettingsScreen }  from '../screens/ThemeSettingsScreen';
 import { OfflineScreen }        from '../screens/OfflineScreen';
 import { useTheme }             from '../theme/ThemeProvider';
@@ -83,7 +85,7 @@ function MainTabs() {
         name="Profile"
         options={{ title: 'Profile', tabBarIcon: ({ color }) => <Text style={{ fontSize: 20, color }}>👤</Text> }}
       >
-        {() => <Placeholder name="Profile" />}
+        {() => <ProfileScreen />}
       </Tab.Screen>
 
       <Tab.Screen
@@ -122,6 +124,14 @@ export function AppNavigator() {
           options={{ animation: ScreenTransitions.Dashboard }}
         >
           {() => <DashboardScreen />}
+        </Stack.Screen>
+        <Stack.Screen
+          name="DetailsView"
+          options={{ animation: ScreenTransitions.Dashboard }}
+        >
+          {({ navigation }) => (
+            <DetailsView onBack={() => navigation.goBack()} />
+          )}
         </Stack.Screen>
         <Stack.Screen
           name="LanguageSettings"
