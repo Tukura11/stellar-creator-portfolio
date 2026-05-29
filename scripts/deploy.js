@@ -46,27 +46,13 @@ if (!RPC_URL) {
 // Contracts to deploy (name → wasm path relative to repo root)
 // ---------------------------------------------------------------------------
 
+const WASM_DIR = process.env.WASM_DIR || "backend/target/wasm32-unknown-unknown/release";
+
 const CONTRACTS = [
-  {
-    name: "bounty",
-    wasm: "backend/target/wasm32-unknown-unknown/release/bounty.wasm",
-    outputKey: "bounty_contract_id",
-  },
-  {
-    name: "escrow",
-    wasm: "backend/target/wasm32-unknown-unknown/release/escrow.wasm",
-    outputKey: "escrow_contract_id",
-  },
-  {
-    name: "freelancer",
-    wasm: "backend/target/wasm32-unknown-unknown/release/freelancer.wasm",
-    outputKey: "freelancer_contract_id",
-  },
-  {
-    name: "governance",
-    wasm: "backend/target/wasm32-unknown-unknown/release/governance.wasm",
-    outputKey: "governance_contract_id",
-  },
+  { name: "bounty",     wasm: `${WASM_DIR}/bounty.wasm`,     outputKey: "bounty_contract_id" },
+  { name: "escrow",     wasm: `${WASM_DIR}/escrow.wasm`,     outputKey: "escrow_contract_id" },
+  { name: "freelancer", wasm: `${WASM_DIR}/freelancer.wasm`, outputKey: "freelancer_contract_id" },
+  { name: "governance", wasm: `${WASM_DIR}/governance.wasm`, outputKey: "governance_contract_id" },
 ];
 
 // ---------------------------------------------------------------------------

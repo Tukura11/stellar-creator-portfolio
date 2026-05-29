@@ -32,14 +32,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Rust & wasm32 target
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: wasm32-unknown-unknown
-
-      - uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: backend
+      - name: Build reproducible contracts & verify hashes
+        run: ./scripts/verify.sh
 
       - name: Install Stellar CLI
         run: |
@@ -71,20 +65,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Rust & wasm32 target
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: wasm32-unknown-unknown
-
-      - uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: backend
+      - name: Build reproducible contracts & verify hashes
+        run: ./scripts/verify.sh
 
       - name: Install Stellar CLI
         run: cargo install --locked stellar-cli --features opt 2>/dev/null || cargo install stellar-cli --features opt
-
-      - name: Build contracts (release)
-        run: cd backend && cargo build --release --target wasm32-unknown-unknown
 
       - name: Deploy contracts
         id: deploy
@@ -93,6 +78,7 @@ jobs:
           STELLAR_RPC_URL: ${{ env.MAINNET_RPC_URL }}
           STELLAR_NETWORK_PASSPHRASE: ${{ env.MAINNET_PASSPHRASE }}
           STELLAR_ADMIN_SECRET: ${{ secrets.MAINNET_DEPLOYER_SECRET }}
+          WASM_DIR: artifacts
         run: node scripts/deploy.js
 
   deploy-frontend:
